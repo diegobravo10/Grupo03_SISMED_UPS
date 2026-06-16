@@ -15,7 +15,7 @@ class Cita(Base):
     hora_inicio = Column(Time, nullable=False)
     hora_fin = Column(Time, nullable=False)
     motivo = Column(String, nullable=True)
-    estado = Column(String, nullable=False, default="pendiente")
+    estado = Column(String, nullable=False, default="SEPARADA")
     fecha_creacion = Column(DateTime, server_default=func.now())
 
     paciente = relationship("Paciente", back_populates="citas")

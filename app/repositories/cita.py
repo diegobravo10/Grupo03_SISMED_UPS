@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from app.models.cita import Cita
 from app.schemas.cita import CitaCreate
 
-ESTADO_CANCELADA = "cancelada"
+ESTADO_CANCELADA = "CANCELADA"
 
 
 def crear_cita(db: Session, cita: CitaCreate) -> Cita:

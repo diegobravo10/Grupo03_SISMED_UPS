@@ -2,18 +2,35 @@ from sqlalchemy.orm import Session
 
 from app.models.cita import Cita
 from app.repositories import cita as cita_repo
+from app.repositories import consulta_medica as consulta_repo
 from app.repositories import medico as medico_repo
 from app.repositories import paciente as paciente_repo
 from app.schemas.cita import CitaCreate
 from app.services.exceptions import EntidadNoEncontradaError, ReglaNegocioError
 
-ESTADOS_VALIDOS = {"pendiente", "confirmada", "cancelada", "atendida"}
+ESTADO_SEPARADA = "SEPARADA"
+ESTADO_CONFIRMADA = "CONFIRMADA"
+ESTADO_EN_SALA_ESPERA = "EN_SALA_ESPERA"
+ESTADO_ATENDIDA = "ATENDIDA"
+ESTADO_CANCELADA = "CANCELADA"
+ESTADO_NO_ASISTIO = "NO_ASISTIO"
+
+ESTADOS_VALIDOS = {
+    ESTADO_SEPARADA,
+    ESTADO_CONFIRMADA,
+    ESTADO_EN_SALA_ESPERA,
+    ESTADO_ATENDIDA,
+    ESTADO_CANCELADA,
+    ESTADO_NO_ASISTIO,
+}
 
 TRANSICIONES_VALIDAS = {
-    "pendiente": {"confirmada", "cancelada"},
-    "confirmada": {"atendida", "cancelada"},
-    "cancelada": set(),
-    "atendida": set(),
+    ESTADO_SEPARADA: {ESTADO_CONFIRMADA, ESTADO_CANCELADA, ESTADO_NO_ASISTIO},
+    ESTADO_CONFIRMADA: {ESTADO_EN_SALA_ESPERA, ESTADO_CANCELADA, ESTADO_NO_ASISTIO},
+    ESTADO_EN_SALA_ESPERA: {ESTADO_ATENDIDA, ESTADO_NO_ASISTIO},
+    ESTADO_ATENDIDA: set(),
+    ESTADO_CANCELADA: set(),
+    ESTADO_NO_ASISTIO: set(),
 }
 
 
@@ -71,5 +88,11 @@ def cambiar_estado_cita(db: Session, cita_id: int, nuevo_estado: str) -> Cita:
         raise ReglaNegocioError(
             f"No se puede cambiar la cita de '{cita.estado}' a '{nuevo_estado}'"
         )
+
+    if nuevo_estado == ESTADO_ATENDIDA:
+        if consulta_repo.obtener_por_cita_id(db, cita_id) is None:
+            raise ReglaNegocioError(
+                "No se puede marcar la cita como ATENDIDA sin una consulta médica asociada"
+            )
 
     return cita_repo.actualizar_estado(db, cita_id, nuevo_estado)
