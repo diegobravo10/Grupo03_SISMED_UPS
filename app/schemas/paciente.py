@@ -1,11 +1,16 @@
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel
 
-
-class PacienteMinimo(BaseModel):
-    """Schema mínimo usado para validar existencia del paciente."""
-
-    id: int
+class PacienteBase(BaseModel):
     nombres: str
     apellidos: str
+    cedula: str
+    telefono: str
 
-    model_config = ConfigDict(from_attributes=True)
+class PacienteCreate(PacienteBase):
+    pass
+
+class PacienteResponse(PacienteBase):
+    id: int
+
+    class Config:
+        from_attributes = True
