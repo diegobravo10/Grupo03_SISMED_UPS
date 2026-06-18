@@ -8,6 +8,12 @@ class PacienteService:
     @staticmethod
     def crear_paciente(db, datos):
 
+        if len(datos.cedula) != 10:
+            raise HTTPException(
+                status_code=400,
+                detail="La cédula debe tener 10 dígitos"
+            )
+
         existente = PacienteRepository.obtener_por_cedula(
             db,
             datos.cedula
