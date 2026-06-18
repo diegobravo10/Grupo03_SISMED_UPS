@@ -1,7 +1,7 @@
 from fastapi import HTTPException
 
 from app.models.medico import Medico
-from app.repositories.medico_repository import MedicoRepository
+from app.repositories.medico import MedicoRepository
 
 
 class MedicoService:

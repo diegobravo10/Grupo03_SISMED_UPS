@@ -13,9 +13,18 @@ class Paciente(Base):
     nombres = Column(String, nullable=False)
     apellidos = Column(String, nullable=False)
     telefono = Column(String, nullable=True)
-    correo = Column(String, nullable=True)
-    direccion = Column(String, nullable=True)
-    fecha_registro = Column(DateTime, server_default=func.now())
 
-    citas = relationship("Cita", back_populates="paciente")
-    consultas = relationship("ConsultaMedica", back_populates="paciente")
+    fecha_registro = Column(
+        DateTime,
+        server_default=func.now()
+    )
+
+    citas = relationship(
+        "Cita",
+        back_populates="paciente"
+    )
+
+    consultas = relationship(
+        "ConsultaMedica",
+        back_populates="paciente"
+    )

@@ -2,9 +2,7 @@ from fastapi import FastAPI
 
 from app.database import Base, engine
 from app import models  # noqa: F401 - registra los modelos en Base.metadata
-from app.routers import cita
-from app.routers import paciente_router
-from app.routers import medico_router
+from app.routers import cita, medico, paciente
 
 Base.metadata.create_all(bind=engine)
 
@@ -23,10 +21,10 @@ def read_root():
 
 
 app.include_router(
-    paciente_router.router
+    paciente.router
 )
 
 
 app.include_router(
-    medico_router.router
+    medico.router
 )

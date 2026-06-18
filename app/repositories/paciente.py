@@ -1,5 +1,6 @@
 from app.models.paciente import Paciente
 
+
 class PacienteRepository:
 
     @staticmethod
@@ -24,3 +25,14 @@ class PacienteRepository:
         db.commit()
         db.refresh(paciente)
         return paciente
+
+    @staticmethod
+    def actualizar(db, paciente):
+        db.commit()
+        db.refresh(paciente)
+        return paciente
+
+    @staticmethod
+    def eliminar(db, paciente):
+        db.delete(paciente)
+        db.commit()

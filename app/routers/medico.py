@@ -5,12 +5,12 @@ from sqlalchemy.orm import Session
 
 from app.database import get_db
 
-from app.schemas.medico_schema import (
+from app.schemas.medico import (
     MedicoCreate,
     MedicoResponse
 )
 
-from app.services.medico_service import (
+from app.services.medico import (
     MedicoService
 )
 
