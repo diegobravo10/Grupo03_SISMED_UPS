@@ -4,6 +4,7 @@ from app.database import Base, engine
 from app import models  # noqa: F401 - registra los modelos en Base.metadata
 from app.routers import cita
 from app.routers import paciente_router
+from app.routers import medico_router
 
 Base.metadata.create_all(bind=engine)
 
@@ -23,4 +24,9 @@ def read_root():
 
 app.include_router(
     paciente_router.router
+)
+
+
+app.include_router(
+    medico_router.router
 )
