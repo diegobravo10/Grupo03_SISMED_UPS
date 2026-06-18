@@ -1,12 +1,15 @@
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel
 
-
-class MedicoMinimo(BaseModel):
-    """Schema mínimo usado para validar existencia del médico."""
-
-    id: int
+class MedicoBase(BaseModel):
     nombres: str
     apellidos: str
     especialidad: str
 
-    model_config = ConfigDict(from_attributes=True)
+class MedicoCreate(MedicoBase):
+    pass
+
+class MedicoResponse(MedicoBase):
+    id: int
+
+    class Config:
+        from_attributes = True
