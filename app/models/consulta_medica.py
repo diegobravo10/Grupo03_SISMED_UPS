@@ -22,3 +22,6 @@ class ConsultaMedica(Base):
     cita = relationship("Cita", back_populates="consulta")
     paciente = relationship("Paciente", back_populates="consultas")
     medico = relationship("Medico", back_populates="consultas")
+    prescripciones = relationship("PrescripcionMedica", back_populates="consulta", cascade="all, delete-orphan")
+    ordenes = relationship("OrdenMedica", back_populates="consulta", cascade="all, delete-orphan")
+    certificados = relationship("CertificadoMedico", back_populates="consulta", cascade="all, delete-orphan")
