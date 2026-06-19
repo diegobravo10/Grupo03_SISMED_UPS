@@ -1,0 +1,1372 @@
+﻿{
+    "openapi":  "3.1.0",
+    "info":  {
+                 "title":  "SISMED UPS - API",
+                 "description":  "Backend acadÃ©mico del sistema de gestiÃ³n mÃ©dica SISMED UPS",
+                 "version":  "0.1.0"
+             },
+    "paths":  {
+                  "/citas/":  {
+                                  "get":  {
+                                              "tags":  [
+                                                           "Citas"
+                                                       ],
+                                              "summary":  "Listar Citas",
+                                              "operationId":  "listar_citas_citas__get",
+                                              "responses":  {
+                                                                "200":  {
+                                                                            "description":  "Successful Response",
+                                                                            "content":  {
+                                                                                            "application/json":  {
+                                                                                                                     "schema":  {
+                                                                                                                                    "items":  {
+                                                                                                                                                  "$ref":  "#/components/schemas/CitaResponse"
+                                                                                                                                              },
+                                                                                                                                    "type":  "array",
+                                                                                                                                    "title":  "Response Listar Citas Citas  Get"
+                                                                                                                                }
+                                                                                                                 }
+                                                                                        }
+                                                                        }
+                                                            }
+                                          },
+                                  "post":  {
+                                               "tags":  [
+                                                            "Citas"
+                                                        ],
+                                               "summary":  "Crear Cita",
+                                               "operationId":  "crear_cita_citas__post",
+                                               "requestBody":  {
+                                                                   "content":  {
+                                                                                   "application/json":  {
+                                                                                                            "schema":  {
+                                                                                                                           "$ref":  "#/components/schemas/CitaCreate"
+                                                                                                                       }
+                                                                                                        }
+                                                                               },
+                                                                   "required":  true
+                                                               },
+                                               "responses":  {
+                                                                 "201":  {
+                                                                             "description":  "Successful Response",
+                                                                             "content":  {
+                                                                                             "application/json":  {
+                                                                                                                      "schema":  {
+                                                                                                                                     "$ref":  "#/components/schemas/CitaResponse"
+                                                                                                                                 }
+                                                                                                                  }
+                                                                                         }
+                                                                         },
+                                                                 "422":  {
+                                                                             "description":  "Validation Error",
+                                                                             "content":  {
+                                                                                             "application/json":  {
+                                                                                                                      "schema":  {
+                                                                                                                                     "$ref":  "#/components/schemas/HTTPValidationError"
+                                                                                                                                 }
+                                                                                                                  }
+                                                                                         }
+                                                                         }
+                                                             }
+                                           }
+                              },
+                  "/citas/{cita_id}":  {
+                                           "get":  {
+                                                       "tags":  [
+                                                                    "Citas"
+                                                                ],
+                                                       "summary":  "Obtener Cita",
+                                                       "operationId":  "obtener_cita_citas__cita_id__get",
+                                                       "parameters":  [
+                                                                          {
+                                                                              "name":  "cita_id",
+                                                                              "in":  "path",
+                                                                              "required":  true,
+                                                                              "schema":  {
+                                                                                             "type":  "integer",
+                                                                                             "title":  "Cita Id"
+                                                                                         }
+                                                                          }
+                                                                      ],
+                                                       "responses":  {
+                                                                         "200":  {
+                                                                                     "description":  "Successful Response",
+                                                                                     "content":  {
+                                                                                                     "application/json":  {
+                                                                                                                              "schema":  {
+                                                                                                                                             "$ref":  "#/components/schemas/CitaResponse"
+                                                                                                                                         }
+                                                                                                                          }
+                                                                                                 }
+                                                                                 },
+                                                                         "422":  {
+                                                                                     "description":  "Validation Error",
+                                                                                     "content":  {
+                                                                                                     "application/json":  {
+                                                                                                                              "schema":  {
+                                                                                                                                             "$ref":  "#/components/schemas/HTTPValidationError"
+                                                                                                                                         }
+                                                                                                                          }
+                                                                                                 }
+                                                                                 }
+                                                                     }
+                                                   }
+                                       },
+                  "/citas/medico/{medico_id}":  {
+                                                    "get":  {
+                                                                "tags":  [
+                                                                             "Citas"
+                                                                         ],
+                                                                "summary":  "Listar Citas Por Medico",
+                                                                "operationId":  "listar_citas_por_medico_citas_medico__medico_id__get",
+                                                                "parameters":  [
+                                                                                   {
+                                                                                       "name":  "medico_id",
+                                                                                       "in":  "path",
+                                                                                       "required":  true,
+                                                                                       "schema":  {
+                                                                                                      "type":  "integer",
+                                                                                                      "title":  "Medico Id"
+                                                                                                  }
+                                                                                   }
+                                                                               ],
+                                                                "responses":  {
+                                                                                  "200":  {
+                                                                                              "description":  "Successful Response",
+                                                                                              "content":  {
+                                                                                                              "application/json":  {
+                                                                                                                                       "schema":  {
+                                                                                                                                                      "type":  "array",
+                                                                                                                                                      "items":  {
+                                                                                                                                                                    "$ref":  "#/components/schemas/CitaResponse"
+                                                                                                                                                                },
+                                                                                                                                                      "title":  "Response Listar Citas Por Medico Citas Medico  Medico Id  Get"
+                                                                                                                                                  }
+                                                                                                                                   }
+                                                                                                          }
+                                                                                          },
+                                                                                  "422":  {
+                                                                                              "description":  "Validation Error",
+                                                                                              "content":  {
+                                                                                                              "application/json":  {
+                                                                                                                                       "schema":  {
+                                                                                                                                                      "$ref":  "#/components/schemas/HTTPValidationError"
+                                                                                                                                                  }
+                                                                                                                                   }
+                                                                                                          }
+                                                                                          }
+                                                                              }
+                                                            }
+                                                },
+                  "/citas/paciente/{paciente_id}":  {
+                                                        "get":  {
+                                                                    "tags":  [
+                                                                                 "Citas"
+                                                                             ],
+                                                                    "summary":  "Listar Citas Por Paciente",
+                                                                    "operationId":  "listar_citas_por_paciente_citas_paciente__paciente_id__get",
+                                                                    "parameters":  [
+                                                                                       {
+                                                                                           "name":  "paciente_id",
+                                                                                           "in":  "path",
+                                                                                           "required":  true,
+                                                                                           "schema":  {
+                                                                                                          "type":  "integer",
+                                                                                                          "title":  "Paciente Id"
+                                                                                                      }
+                                                                                       }
+                                                                                   ],
+                                                                    "responses":  {
+                                                                                      "200":  {
+                                                                                                  "description":  "Successful Response",
+                                                                                                  "content":  {
+                                                                                                                  "application/json":  {
+                                                                                                                                           "schema":  {
+                                                                                                                                                          "type":  "array",
+                                                                                                                                                          "items":  {
+                                                                                                                                                                        "$ref":  "#/components/schemas/CitaResponse"
+                                                                                                                                                                    },
+                                                                                                                                                          "title":  "Response Listar Citas Por Paciente Citas Paciente  Paciente Id  Get"
+                                                                                                                                                      }
+                                                                                                                                       }
+                                                                                                              }
+                                                                                              },
+                                                                                      "422":  {
+                                                                                                  "description":  "Validation Error",
+                                                                                                  "content":  {
+                                                                                                                  "application/json":  {
+                                                                                                                                           "schema":  {
+                                                                                                                                                          "$ref":  "#/components/schemas/HTTPValidationError"
+                                                                                                                                                      }
+                                                                                                                                       }
+                                                                                                              }
+                                                                                              }
+                                                                                  }
+                                                                }
+                                                    },
+                  "/citas/{cita_id}/estado":  {
+                                                  "put":  {
+                                                              "tags":  [
+                                                                           "Citas"
+                                                                       ],
+                                                              "summary":  "Cambiar Estado Cita",
+                                                              "operationId":  "cambiar_estado_cita_citas__cita_id__estado_put",
+                                                              "parameters":  [
+                                                                                 {
+                                                                                     "name":  "cita_id",
+                                                                                     "in":  "path",
+                                                                                     "required":  true,
+                                                                                     "schema":  {
+                                                                                                    "type":  "integer",
+                                                                                                    "title":  "Cita Id"
+                                                                                                }
+                                                                                 }
+                                                                             ],
+                                                              "requestBody":  {
+                                                                                  "required":  true,
+                                                                                  "content":  {
+                                                                                                  "application/json":  {
+                                                                                                                           "schema":  {
+                                                                                                                                          "$ref":  "#/components/schemas/CitaCambioEstado"
+                                                                                                                                      }
+                                                                                                                       }
+                                                                                              }
+                                                                              },
+                                                              "responses":  {
+                                                                                "200":  {
+                                                                                            "description":  "Successful Response",
+                                                                                            "content":  {
+                                                                                                            "application/json":  {
+                                                                                                                                     "schema":  {
+                                                                                                                                                    "$ref":  "#/components/schemas/CitaResponse"
+                                                                                                                                                }
+                                                                                                                                 }
+                                                                                                        }
+                                                                                        },
+                                                                                "422":  {
+                                                                                            "description":  "Validation Error",
+                                                                                            "content":  {
+                                                                                                            "application/json":  {
+                                                                                                                                     "schema":  {
+                                                                                                                                                    "$ref":  "#/components/schemas/HTTPValidationError"
+                                                                                                                                                }
+                                                                                                                                 }
+                                                                                                        }
+                                                                                        }
+                                                                            }
+                                                          }
+                                              },
+                  "/":  {
+                            "get":  {
+                                        "summary":  "Read Root",
+                                        "operationId":  "read_root__get",
+                                        "responses":  {
+                                                          "200":  {
+                                                                      "description":  "Successful Response",
+                                                                      "content":  {
+                                                                                      "application/json":  {
+                                                                                                               "schema":  {
+
+                                                                                                                          }
+                                                                                                           }
+                                                                                  }
+                                                                  }
+                                                      }
+                                    }
+                        },
+                  "/pacientes/":  {
+                                      "get":  {
+                                                  "tags":  [
+                                                               "Pacientes"
+                                                           ],
+                                                  "summary":  "Listar Pacientes",
+                                                  "operationId":  "listar_pacientes_pacientes__get",
+                                                  "responses":  {
+                                                                    "200":  {
+                                                                                "description":  "Successful Response",
+                                                                                "content":  {
+                                                                                                "application/json":  {
+                                                                                                                         "schema":  {
+                                                                                                                                        "items":  {
+                                                                                                                                                      "$ref":  "#/components/schemas/PacienteResponse"
+                                                                                                                                                  },
+                                                                                                                                        "type":  "array",
+                                                                                                                                        "title":  "Response Listar Pacientes Pacientes  Get"
+                                                                                                                                    }
+                                                                                                                     }
+                                                                                            }
+                                                                            }
+                                                                }
+                                              },
+                                      "post":  {
+                                                   "tags":  [
+                                                                "Pacientes"
+                                                            ],
+                                                   "summary":  "Crear Paciente",
+                                                   "operationId":  "crear_paciente_pacientes__post",
+                                                   "requestBody":  {
+                                                                       "content":  {
+                                                                                       "application/json":  {
+                                                                                                                "schema":  {
+                                                                                                                               "$ref":  "#/components/schemas/PacienteCreate"
+                                                                                                                           }
+                                                                                                            }
+                                                                                   },
+                                                                       "required":  true
+                                                                   },
+                                                   "responses":  {
+                                                                     "200":  {
+                                                                                 "description":  "Successful Response",
+                                                                                 "content":  {
+                                                                                                 "application/json":  {
+                                                                                                                          "schema":  {
+                                                                                                                                         "$ref":  "#/components/schemas/PacienteResponse"
+                                                                                                                                     }
+                                                                                                                      }
+                                                                                             }
+                                                                             },
+                                                                     "422":  {
+                                                                                 "description":  "Validation Error",
+                                                                                 "content":  {
+                                                                                                 "application/json":  {
+                                                                                                                          "schema":  {
+                                                                                                                                         "$ref":  "#/components/schemas/HTTPValidationError"
+                                                                                                                                     }
+                                                                                                                      }
+                                                                                             }
+                                                                             }
+                                                                 }
+                                               }
+                                  },
+                  "/pacientes/{paciente_id}":  {
+                                                   "get":  {
+                                                               "tags":  [
+                                                                            "Pacientes"
+                                                                        ],
+                                                               "summary":  "Obtener Paciente",
+                                                               "operationId":  "obtener_paciente_pacientes__paciente_id__get",
+                                                               "parameters":  [
+                                                                                  {
+                                                                                      "name":  "paciente_id",
+                                                                                      "in":  "path",
+                                                                                      "required":  true,
+                                                                                      "schema":  {
+                                                                                                     "type":  "integer",
+                                                                                                     "title":  "Paciente Id"
+                                                                                                 }
+                                                                                  }
+                                                                              ],
+                                                               "responses":  {
+                                                                                 "200":  {
+                                                                                             "description":  "Successful Response",
+                                                                                             "content":  {
+                                                                                                             "application/json":  {
+                                                                                                                                      "schema":  {
+                                                                                                                                                     "$ref":  "#/components/schemas/PacienteResponse"
+                                                                                                                                                 }
+                                                                                                                                  }
+                                                                                                         }
+                                                                                         },
+                                                                                 "422":  {
+                                                                                             "description":  "Validation Error",
+                                                                                             "content":  {
+                                                                                                             "application/json":  {
+                                                                                                                                      "schema":  {
+                                                                                                                                                     "$ref":  "#/components/schemas/HTTPValidationError"
+                                                                                                                                                 }
+                                                                                                                                  }
+                                                                                                         }
+                                                                                         }
+                                                                             }
+                                                           },
+                                                   "put":  {
+                                                               "tags":  [
+                                                                            "Pacientes"
+                                                                        ],
+                                                               "summary":  "Actualizar Paciente",
+                                                               "operationId":  "actualizar_paciente_pacientes__paciente_id__put",
+                                                               "parameters":  [
+                                                                                  {
+                                                                                      "name":  "paciente_id",
+                                                                                      "in":  "path",
+                                                                                      "required":  true,
+                                                                                      "schema":  {
+                                                                                                     "type":  "integer",
+                                                                                                     "title":  "Paciente Id"
+                                                                                                 }
+                                                                                  }
+                                                                              ],
+                                                               "requestBody":  {
+                                                                                   "required":  true,
+                                                                                   "content":  {
+                                                                                                   "application/json":  {
+                                                                                                                            "schema":  {
+                                                                                                                                           "$ref":  "#/components/schemas/PacienteCreate"
+                                                                                                                                       }
+                                                                                                                        }
+                                                                                               }
+                                                                               },
+                                                               "responses":  {
+                                                                                 "200":  {
+                                                                                             "description":  "Successful Response",
+                                                                                             "content":  {
+                                                                                                             "application/json":  {
+                                                                                                                                      "schema":  {
+                                                                                                                                                     "$ref":  "#/components/schemas/PacienteResponse"
+                                                                                                                                                 }
+                                                                                                                                  }
+                                                                                                         }
+                                                                                         },
+                                                                                 "422":  {
+                                                                                             "description":  "Validation Error",
+                                                                                             "content":  {
+                                                                                                             "application/json":  {
+                                                                                                                                      "schema":  {
+                                                                                                                                                     "$ref":  "#/components/schemas/HTTPValidationError"
+                                                                                                                                                 }
+                                                                                                                                  }
+                                                                                                         }
+                                                                                         }
+                                                                             }
+                                                           },
+                                                   "delete":  {
+                                                                  "tags":  [
+                                                                               "Pacientes"
+                                                                           ],
+                                                                  "summary":  "Eliminar Paciente",
+                                                                  "operationId":  "eliminar_paciente_pacientes__paciente_id__delete",
+                                                                  "parameters":  [
+                                                                                     {
+                                                                                         "name":  "paciente_id",
+                                                                                         "in":  "path",
+                                                                                         "required":  true,
+                                                                                         "schema":  {
+                                                                                                        "type":  "integer",
+                                                                                                        "title":  "Paciente Id"
+                                                                                                    }
+                                                                                     }
+                                                                                 ],
+                                                                  "responses":  {
+                                                                                    "200":  {
+                                                                                                "description":  "Successful Response",
+                                                                                                "content":  {
+                                                                                                                "application/json":  {
+                                                                                                                                         "schema":  {
+
+                                                                                                                                                    }
+                                                                                                                                     }
+                                                                                                            }
+                                                                                            },
+                                                                                    "422":  {
+                                                                                                "description":  "Validation Error",
+                                                                                                "content":  {
+                                                                                                                "application/json":  {
+                                                                                                                                         "schema":  {
+                                                                                                                                                        "$ref":  "#/components/schemas/HTTPValidationError"
+                                                                                                                                                    }
+                                                                                                                                     }
+                                                                                                            }
+                                                                                            }
+                                                                                }
+                                                              }
+                                               },
+                  "/medicos/":  {
+                                    "get":  {
+                                                "tags":  [
+                                                             "Medicos"
+                                                         ],
+                                                "summary":  "Listar Medicos",
+                                                "operationId":  "listar_medicos_medicos__get",
+                                                "responses":  {
+                                                                  "200":  {
+                                                                              "description":  "Successful Response",
+                                                                              "content":  {
+                                                                                              "application/json":  {
+                                                                                                                       "schema":  {
+                                                                                                                                      "items":  {
+                                                                                                                                                    "$ref":  "#/components/schemas/MedicoResponse"
+                                                                                                                                                },
+                                                                                                                                      "type":  "array",
+                                                                                                                                      "title":  "Response Listar Medicos Medicos  Get"
+                                                                                                                                  }
+                                                                                                                   }
+                                                                                          }
+                                                                          }
+                                                              }
+                                            },
+                                    "post":  {
+                                                 "tags":  [
+                                                              "Medicos"
+                                                          ],
+                                                 "summary":  "Crear Medico",
+                                                 "operationId":  "crear_medico_medicos__post",
+                                                 "requestBody":  {
+                                                                     "content":  {
+                                                                                     "application/json":  {
+                                                                                                              "schema":  {
+                                                                                                                             "$ref":  "#/components/schemas/MedicoCreate"
+                                                                                                                         }
+                                                                                                          }
+                                                                                 },
+                                                                     "required":  true
+                                                                 },
+                                                 "responses":  {
+                                                                   "200":  {
+                                                                               "description":  "Successful Response",
+                                                                               "content":  {
+                                                                                               "application/json":  {
+                                                                                                                        "schema":  {
+                                                                                                                                       "$ref":  "#/components/schemas/MedicoResponse"
+                                                                                                                                   }
+                                                                                                                    }
+                                                                                           }
+                                                                           },
+                                                                   "422":  {
+                                                                               "description":  "Validation Error",
+                                                                               "content":  {
+                                                                                               "application/json":  {
+                                                                                                                        "schema":  {
+                                                                                                                                       "$ref":  "#/components/schemas/HTTPValidationError"
+                                                                                                                                   }
+                                                                                                                    }
+                                                                                           }
+                                                                           }
+                                                               }
+                                             }
+                                },
+                  "/medicos/{medico_id}":  {
+                                               "get":  {
+                                                           "tags":  [
+                                                                        "Medicos"
+                                                                    ],
+                                                           "summary":  "Obtener Medico",
+                                                           "operationId":  "obtener_medico_medicos__medico_id__get",
+                                                           "parameters":  [
+                                                                              {
+                                                                                  "name":  "medico_id",
+                                                                                  "in":  "path",
+                                                                                  "required":  true,
+                                                                                  "schema":  {
+                                                                                                 "type":  "integer",
+                                                                                                 "title":  "Medico Id"
+                                                                                             }
+                                                                              }
+                                                                          ],
+                                                           "responses":  {
+                                                                             "200":  {
+                                                                                         "description":  "Successful Response",
+                                                                                         "content":  {
+                                                                                                         "application/json":  {
+                                                                                                                                  "schema":  {
+                                                                                                                                                 "$ref":  "#/components/schemas/MedicoResponse"
+                                                                                                                                             }
+                                                                                                                              }
+                                                                                                     }
+                                                                                     },
+                                                                             "422":  {
+                                                                                         "description":  "Validation Error",
+                                                                                         "content":  {
+                                                                                                         "application/json":  {
+                                                                                                                                  "schema":  {
+                                                                                                                                                 "$ref":  "#/components/schemas/HTTPValidationError"
+                                                                                                                                             }
+                                                                                                                              }
+                                                                                                     }
+                                                                                     }
+                                                                         }
+                                                       },
+                                               "put":  {
+                                                           "tags":  [
+                                                                        "Medicos"
+                                                                    ],
+                                                           "summary":  "Actualizar Medico",
+                                                           "operationId":  "actualizar_medico_medicos__medico_id__put",
+                                                           "parameters":  [
+                                                                              {
+                                                                                  "name":  "medico_id",
+                                                                                  "in":  "path",
+                                                                                  "required":  true,
+                                                                                  "schema":  {
+                                                                                                 "type":  "integer",
+                                                                                                 "title":  "Medico Id"
+                                                                                             }
+                                                                              }
+                                                                          ],
+                                                           "requestBody":  {
+                                                                               "required":  true,
+                                                                               "content":  {
+                                                                                               "application/json":  {
+                                                                                                                        "schema":  {
+                                                                                                                                       "$ref":  "#/components/schemas/MedicoCreate"
+                                                                                                                                   }
+                                                                                                                    }
+                                                                                           }
+                                                                           },
+                                                           "responses":  {
+                                                                             "200":  {
+                                                                                         "description":  "Successful Response",
+                                                                                         "content":  {
+                                                                                                         "application/json":  {
+                                                                                                                                  "schema":  {
+                                                                                                                                                 "$ref":  "#/components/schemas/MedicoResponse"
+                                                                                                                                             }
+                                                                                                                              }
+                                                                                                     }
+                                                                                     },
+                                                                             "422":  {
+                                                                                         "description":  "Validation Error",
+                                                                                         "content":  {
+                                                                                                         "application/json":  {
+                                                                                                                                  "schema":  {
+                                                                                                                                                 "$ref":  "#/components/schemas/HTTPValidationError"
+                                                                                                                                             }
+                                                                                                                              }
+                                                                                                     }
+                                                                                     }
+                                                                         }
+                                                       },
+                                               "delete":  {
+                                                              "tags":  [
+                                                                           "Medicos"
+                                                                       ],
+                                                              "summary":  "Eliminar Medico",
+                                                              "operationId":  "eliminar_medico_medicos__medico_id__delete",
+                                                              "parameters":  [
+                                                                                 {
+                                                                                     "name":  "medico_id",
+                                                                                     "in":  "path",
+                                                                                     "required":  true,
+                                                                                     "schema":  {
+                                                                                                    "type":  "integer",
+                                                                                                    "title":  "Medico Id"
+                                                                                                }
+                                                                                 }
+                                                                             ],
+                                                              "responses":  {
+                                                                                "200":  {
+                                                                                            "description":  "Successful Response",
+                                                                                            "content":  {
+                                                                                                            "application/json":  {
+                                                                                                                                     "schema":  {
+
+                                                                                                                                                }
+                                                                                                                                 }
+                                                                                                        }
+                                                                                        },
+                                                                                "422":  {
+                                                                                            "description":  "Validation Error",
+                                                                                            "content":  {
+                                                                                                            "application/json":  {
+                                                                                                                                     "schema":  {
+                                                                                                                                                    "$ref":  "#/components/schemas/HTTPValidationError"
+                                                                                                                                                }
+                                                                                                                                 }
+                                                                                                        }
+                                                                                        }
+                                                                            }
+                                                          }
+                                           },
+                  "/admin/comprobantes/":  {
+                                               "get":  {
+                                                           "tags":  [
+                                                                        "Administrativo"
+                                                                    ],
+                                                           "summary":  "Listar Comprobantes",
+                                                           "operationId":  "listar_comprobantes_admin_comprobantes__get",
+                                                           "responses":  {
+                                                                             "200":  {
+                                                                                         "description":  "Successful Response",
+                                                                                         "content":  {
+                                                                                                         "application/json":  {
+                                                                                                                                  "schema":  {
+                                                                                                                                                 "items":  {
+                                                                                                                                                               "$ref":  "#/components/schemas/ComprobanteVentaResponse"
+                                                                                                                                                           },
+                                                                                                                                                 "type":  "array",
+                                                                                                                                                 "title":  "Response Listar Comprobantes Admin Comprobantes  Get"
+                                                                                                                                             }
+                                                                                                                              }
+                                                                                                     }
+                                                                                     }
+                                                                         }
+                                                       },
+                                               "post":  {
+                                                            "tags":  [
+                                                                         "Administrativo"
+                                                                     ],
+                                                            "summary":  "Registrar Comprobante",
+                                                            "operationId":  "registrar_comprobante_admin_comprobantes__post",
+                                                            "requestBody":  {
+                                                                                "content":  {
+                                                                                                "application/json":  {
+                                                                                                                         "schema":  {
+                                                                                                                                        "$ref":  "#/components/schemas/ComprobanteVentaCreate"
+                                                                                                                                    }
+                                                                                                                     }
+                                                                                            },
+                                                                                "required":  true
+                                                                            },
+                                                            "responses":  {
+                                                                              "201":  {
+                                                                                          "description":  "Successful Response",
+                                                                                          "content":  {
+                                                                                                          "application/json":  {
+                                                                                                                                   "schema":  {
+                                                                                                                                                  "$ref":  "#/components/schemas/ComprobanteVentaResponse"
+                                                                                                                                              }
+                                                                                                                               }
+                                                                                                      }
+                                                                                      },
+                                                                              "422":  {
+                                                                                          "description":  "Validation Error",
+                                                                                          "content":  {
+                                                                                                          "application/json":  {
+                                                                                                                                   "schema":  {
+                                                                                                                                                  "$ref":  "#/components/schemas/HTTPValidationError"
+                                                                                                                                              }
+                                                                                                                               }
+                                                                                                      }
+                                                                                      }
+                                                                          }
+                                                        }
+                                           },
+                  "/admin/caja/ingresos":  {
+                                               "post":  {
+                                                            "tags":  [
+                                                                         "Administrativo"
+                                                                     ],
+                                                            "summary":  "Registrar Ingreso",
+                                                            "operationId":  "registrar_ingreso_admin_caja_ingresos_post",
+                                                            "requestBody":  {
+                                                                                "required":  true,
+                                                                                "content":  {
+                                                                                                "application/json":  {
+                                                                                                                         "schema":  {
+                                                                                                                                        "$ref":  "#/components/schemas/TransaccionCajaCreate"
+                                                                                                                                    }
+                                                                                                                     }
+                                                                                            }
+                                                                            },
+                                                            "responses":  {
+                                                                              "201":  {
+                                                                                          "description":  "Successful Response",
+                                                                                          "content":  {
+                                                                                                          "application/json":  {
+                                                                                                                                   "schema":  {
+                                                                                                                                                  "$ref":  "#/components/schemas/TransaccionCajaResponse"
+                                                                                                                                              }
+                                                                                                                               }
+                                                                                                      }
+                                                                                      },
+                                                                              "422":  {
+                                                                                          "description":  "Validation Error",
+                                                                                          "content":  {
+                                                                                                          "application/json":  {
+                                                                                                                                   "schema":  {
+                                                                                                                                                  "$ref":  "#/components/schemas/HTTPValidationError"
+                                                                                                                                              }
+                                                                                                                               }
+                                                                                                      }
+                                                                                      }
+                                                                          }
+                                                        },
+                                               "get":  {
+                                                           "tags":  [
+                                                                        "Administrativo"
+                                                                    ],
+                                                           "summary":  "Consultar Ingresos Por Fecha",
+                                                           "operationId":  "consultar_ingresos_por_fecha_admin_caja_ingresos_get",
+                                                           "parameters":  [
+                                                                              {
+                                                                                  "name":  "fecha_inicio",
+                                                                                  "in":  "query",
+                                                                                  "required":  true,
+                                                                                  "schema":  {
+                                                                                                 "type":  "string",
+                                                                                                 "format":  "date",
+                                                                                                 "description":  "Fecha de inicio (YYYY-MM-DD)",
+                                                                                                 "title":  "Fecha Inicio"
+                                                                                             },
+                                                                                  "description":  "Fecha de inicio (YYYY-MM-DD)"
+                                                                              },
+                                                                              {
+                                                                                  "name":  "fecha_fin",
+                                                                                  "in":  "query",
+                                                                                  "required":  true,
+                                                                                  "schema":  {
+                                                                                                 "type":  "string",
+                                                                                                 "format":  "date",
+                                                                                                 "description":  "Fecha de fin (YYYY-MM-DD)",
+                                                                                                 "title":  "Fecha Fin"
+                                                                                             },
+                                                                                  "description":  "Fecha de fin (YYYY-MM-DD)"
+                                                                              }
+                                                                          ],
+                                                           "responses":  {
+                                                                             "200":  {
+                                                                                         "description":  "Successful Response",
+                                                                                         "content":  {
+                                                                                                         "application/json":  {
+                                                                                                                                  "schema":  {
+                                                                                                                                                 "type":  "array",
+                                                                                                                                                 "items":  {
+                                                                                                                                                               "$ref":  "#/components/schemas/TransaccionCajaResponse"
+                                                                                                                                                           },
+                                                                                                                                                 "title":  "Response Consultar Ingresos Por Fecha Admin Caja Ingresos Get"
+                                                                                                                                             }
+                                                                                                                              }
+                                                                                                     }
+                                                                                     },
+                                                                             "422":  {
+                                                                                         "description":  "Validation Error",
+                                                                                         "content":  {
+                                                                                                         "application/json":  {
+                                                                                                                                  "schema":  {
+                                                                                                                                                 "$ref":  "#/components/schemas/HTTPValidationError"
+                                                                                                                                             }
+                                                                                                                              }
+                                                                                                     }
+                                                                                     }
+                                                                         }
+                                                       }
+                                           },
+                  "/admin/caja/egresos":  {
+                                              "post":  {
+                                                           "tags":  [
+                                                                        "Administrativo"
+                                                                    ],
+                                                           "summary":  "Registrar Egreso",
+                                                           "operationId":  "registrar_egreso_admin_caja_egresos_post",
+                                                           "requestBody":  {
+                                                                               "content":  {
+                                                                                               "application/json":  {
+                                                                                                                        "schema":  {
+                                                                                                                                       "$ref":  "#/components/schemas/TransaccionCajaCreate"
+                                                                                                                                   }
+                                                                                                                    }
+                                                                                           },
+                                                                               "required":  true
+                                                                           },
+                                                           "responses":  {
+                                                                             "201":  {
+                                                                                         "description":  "Successful Response",
+                                                                                         "content":  {
+                                                                                                         "application/json":  {
+                                                                                                                                  "schema":  {
+                                                                                                                                                 "$ref":  "#/components/schemas/TransaccionCajaResponse"
+                                                                                                                                             }
+                                                                                                                              }
+                                                                                                     }
+                                                                                     },
+                                                                             "422":  {
+                                                                                         "description":  "Validation Error",
+                                                                                         "content":  {
+                                                                                                         "application/json":  {
+                                                                                                                                  "schema":  {
+                                                                                                                                                 "$ref":  "#/components/schemas/HTTPValidationError"
+                                                                                                                                             }
+                                                                                                                              }
+                                                                                                     }
+                                                                                     }
+                                                                         }
+                                                       }
+                                          }
+              },
+    "components":  {
+                       "schemas":  {
+                                       "CitaCambioEstado":  {
+                                                                "properties":  {
+                                                                                   "estado":  {
+                                                                                                  "type":  "string",
+                                                                                                  "title":  "Estado"
+                                                                                              }
+                                                                               },
+                                                                "type":  "object",
+                                                                "required":  [
+                                                                                 "estado"
+                                                                             ],
+                                                                "title":  "CitaCambioEstado"
+                                                            },
+                                       "CitaCreate":  {
+                                                          "properties":  {
+                                                                             "paciente_id":  {
+                                                                                                 "type":  "integer",
+                                                                                                 "title":  "Paciente Id"
+                                                                                             },
+                                                                             "medico_id":  {
+                                                                                               "type":  "integer",
+                                                                                               "title":  "Medico Id"
+                                                                                           },
+                                                                             "fecha":  {
+                                                                                           "type":  "string",
+                                                                                           "format":  "date",
+                                                                                           "title":  "Fecha"
+                                                                                       },
+                                                                             "hora_inicio":  {
+                                                                                                 "type":  "string",
+                                                                                                 "format":  "time",
+                                                                                                 "title":  "Hora Inicio"
+                                                                                             },
+                                                                             "hora_fin":  {
+                                                                                              "type":  "string",
+                                                                                              "format":  "time",
+                                                                                              "title":  "Hora Fin"
+                                                                                          },
+                                                                             "motivo":  {
+                                                                                            "anyOf":  [
+                                                                                                          {
+                                                                                                              "type":  "string"
+                                                                                                          },
+                                                                                                          {
+                                                                                                              "type":  "null"
+                                                                                                          }
+                                                                                                      ],
+                                                                                            "title":  "Motivo"
+                                                                                        }
+                                                                         },
+                                                          "type":  "object",
+                                                          "required":  [
+                                                                           "paciente_id",
+                                                                           "medico_id",
+                                                                           "fecha",
+                                                                           "hora_inicio",
+                                                                           "hora_fin"
+                                                                       ],
+                                                          "title":  "CitaCreate"
+                                                      },
+                                       "CitaResponse":  {
+                                                            "properties":  {
+                                                                               "paciente_id":  {
+                                                                                                   "type":  "integer",
+                                                                                                   "title":  "Paciente Id"
+                                                                                               },
+                                                                               "medico_id":  {
+                                                                                                 "type":  "integer",
+                                                                                                 "title":  "Medico Id"
+                                                                                             },
+                                                                               "fecha":  {
+                                                                                             "type":  "string",
+                                                                                             "format":  "date",
+                                                                                             "title":  "Fecha"
+                                                                                         },
+                                                                               "hora_inicio":  {
+                                                                                                   "type":  "string",
+                                                                                                   "format":  "time",
+                                                                                                   "title":  "Hora Inicio"
+                                                                                               },
+                                                                               "hora_fin":  {
+                                                                                                "type":  "string",
+                                                                                                "format":  "time",
+                                                                                                "title":  "Hora Fin"
+                                                                                            },
+                                                                               "motivo":  {
+                                                                                              "anyOf":  [
+                                                                                                            {
+                                                                                                                "type":  "string"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "type":  "null"
+                                                                                                            }
+                                                                                                        ],
+                                                                                              "title":  "Motivo"
+                                                                                          },
+                                                                               "id":  {
+                                                                                          "type":  "integer",
+                                                                                          "title":  "Id"
+                                                                                      },
+                                                                               "estado":  {
+                                                                                              "type":  "string",
+                                                                                              "title":  "Estado"
+                                                                                          },
+                                                                               "fecha_creacion":  {
+                                                                                                      "type":  "string",
+                                                                                                      "format":  "date-time",
+                                                                                                      "title":  "Fecha Creacion"
+                                                                                                  }
+                                                                           },
+                                                            "type":  "object",
+                                                            "required":  [
+                                                                             "paciente_id",
+                                                                             "medico_id",
+                                                                             "fecha",
+                                                                             "hora_inicio",
+                                                                             "hora_fin",
+                                                                             "id",
+                                                                             "estado",
+                                                                             "fecha_creacion"
+                                                                         ],
+                                                            "title":  "CitaResponse"
+                                                        },
+                                       "ComprobanteVentaCreate":  {
+                                                                      "properties":  {
+                                                                                         "tipo_comprobante":  {
+                                                                                                                  "type":  "string",
+                                                                                                                  "title":  "Tipo Comprobante"
+                                                                                                              },
+                                                                                         "serie":  {
+                                                                                                       "type":  "string",
+                                                                                                       "title":  "Serie"
+                                                                                                   },
+                                                                                         "numero":  {
+                                                                                                        "type":  "string",
+                                                                                                        "title":  "Numero"
+                                                                                                    },
+                                                                                         "cliente_nombre":  {
+                                                                                                                "type":  "string",
+                                                                                                                "title":  "Cliente Nombre"
+                                                                                                            },
+                                                                                         "cliente_documento":  {
+                                                                                                                   "type":  "string",
+                                                                                                                   "title":  "Cliente Documento"
+                                                                                                               },
+                                                                                         "fecha_emision":  {
+                                                                                                               "type":  "string",
+                                                                                                               "format":  "date",
+                                                                                                               "title":  "Fecha Emision"
+                                                                                                           },
+                                                                                         "subtotal":  {
+                                                                                                          "type":  "number",
+                                                                                                          "title":  "Subtotal"
+                                                                                                      },
+                                                                                         "igv":  {
+                                                                                                     "type":  "number",
+                                                                                                     "title":  "Igv"
+                                                                                                 },
+                                                                                         "total":  {
+                                                                                                       "type":  "number",
+                                                                                                       "title":  "Total"
+                                                                                                   }
+                                                                                     },
+                                                                      "type":  "object",
+                                                                      "required":  [
+                                                                                       "tipo_comprobante",
+                                                                                       "serie",
+                                                                                       "numero",
+                                                                                       "cliente_nombre",
+                                                                                       "cliente_documento",
+                                                                                       "fecha_emision",
+                                                                                       "subtotal",
+                                                                                       "igv",
+                                                                                       "total"
+                                                                                   ],
+                                                                      "title":  "ComprobanteVentaCreate"
+                                                                  },
+                                       "ComprobanteVentaResponse":  {
+                                                                        "properties":  {
+                                                                                           "tipo_comprobante":  {
+                                                                                                                    "type":  "string",
+                                                                                                                    "title":  "Tipo Comprobante"
+                                                                                                                },
+                                                                                           "serie":  {
+                                                                                                         "type":  "string",
+                                                                                                         "title":  "Serie"
+                                                                                                     },
+                                                                                           "numero":  {
+                                                                                                          "type":  "string",
+                                                                                                          "title":  "Numero"
+                                                                                                      },
+                                                                                           "cliente_nombre":  {
+                                                                                                                  "type":  "string",
+                                                                                                                  "title":  "Cliente Nombre"
+                                                                                                              },
+                                                                                           "cliente_documento":  {
+                                                                                                                     "type":  "string",
+                                                                                                                     "title":  "Cliente Documento"
+                                                                                                                 },
+                                                                                           "fecha_emision":  {
+                                                                                                                 "type":  "string",
+                                                                                                                 "format":  "date",
+                                                                                                                 "title":  "Fecha Emision"
+                                                                                                             },
+                                                                                           "subtotal":  {
+                                                                                                            "type":  "number",
+                                                                                                            "title":  "Subtotal"
+                                                                                                        },
+                                                                                           "igv":  {
+                                                                                                       "type":  "number",
+                                                                                                       "title":  "Igv"
+                                                                                                   },
+                                                                                           "total":  {
+                                                                                                         "type":  "number",
+                                                                                                         "title":  "Total"
+                                                                                                     },
+                                                                                           "id":  {
+                                                                                                      "type":  "integer",
+                                                                                                      "title":  "Id"
+                                                                                                  },
+                                                                                           "estado":  {
+                                                                                                          "type":  "string",
+                                                                                                          "title":  "Estado"
+                                                                                                      },
+                                                                                           "fecha_creacion":  {
+                                                                                                                  "type":  "string",
+                                                                                                                  "format":  "date-time",
+                                                                                                                  "title":  "Fecha Creacion"
+                                                                                                              }
+                                                                                       },
+                                                                        "type":  "object",
+                                                                        "required":  [
+                                                                                         "tipo_comprobante",
+                                                                                         "serie",
+                                                                                         "numero",
+                                                                                         "cliente_nombre",
+                                                                                         "cliente_documento",
+                                                                                         "fecha_emision",
+                                                                                         "subtotal",
+                                                                                         "igv",
+                                                                                         "total",
+                                                                                         "id",
+                                                                                         "estado",
+                                                                                         "fecha_creacion"
+                                                                                     ],
+                                                                        "title":  "ComprobanteVentaResponse"
+                                                                    },
+                                       "HTTPValidationError":  {
+                                                                   "properties":  {
+                                                                                      "detail":  {
+                                                                                                     "items":  {
+                                                                                                                   "$ref":  "#/components/schemas/ValidationError"
+                                                                                                               },
+                                                                                                     "type":  "array",
+                                                                                                     "title":  "Detail"
+                                                                                                 }
+                                                                                  },
+                                                                   "type":  "object",
+                                                                   "title":  "HTTPValidationError"
+                                                               },
+                                       "MedicoCreate":  {
+                                                            "properties":  {
+                                                                               "nombres":  {
+                                                                                               "type":  "string",
+                                                                                               "title":  "Nombres"
+                                                                                           },
+                                                                               "especialidad":  {
+                                                                                                    "type":  "string",
+                                                                                                    "title":  "Especialidad"
+                                                                                                }
+                                                                           },
+                                                            "type":  "object",
+                                                            "required":  [
+                                                                             "nombres",
+                                                                             "especialidad"
+                                                                         ],
+                                                            "title":  "MedicoCreate"
+                                                        },
+                                       "MedicoResponse":  {
+                                                              "properties":  {
+                                                                                 "nombres":  {
+                                                                                                 "type":  "string",
+                                                                                                 "title":  "Nombres"
+                                                                                             },
+                                                                                 "especialidad":  {
+                                                                                                      "type":  "string",
+                                                                                                      "title":  "Especialidad"
+                                                                                                  },
+                                                                                 "id":  {
+                                                                                            "type":  "integer",
+                                                                                            "title":  "Id"
+                                                                                        }
+                                                                             },
+                                                              "type":  "object",
+                                                              "required":  [
+                                                                               "nombres",
+                                                                               "especialidad",
+                                                                               "id"
+                                                                           ],
+                                                              "title":  "MedicoResponse"
+                                                          },
+                                       "PacienteCreate":  {
+                                                              "properties":  {
+                                                                                 "cedula":  {
+                                                                                                "type":  "string",
+                                                                                                "title":  "Cedula"
+                                                                                            },
+                                                                                 "nombres":  {
+                                                                                                 "type":  "string",
+                                                                                                 "title":  "Nombres"
+                                                                                             },
+                                                                                 "apellidos":  {
+                                                                                                   "type":  "string",
+                                                                                                   "title":  "Apellidos"
+                                                                                               },
+                                                                                 "telefono":  {
+                                                                                                  "type":  "string",
+                                                                                                  "title":  "Telefono"
+                                                                                              }
+                                                                             },
+                                                              "type":  "object",
+                                                              "required":  [
+                                                                               "cedula",
+                                                                               "nombres",
+                                                                               "apellidos",
+                                                                               "telefono"
+                                                                           ],
+                                                              "title":  "PacienteCreate"
+                                                          },
+                                       "PacienteResponse":  {
+                                                                "properties":  {
+                                                                                   "cedula":  {
+                                                                                                  "type":  "string",
+                                                                                                  "title":  "Cedula"
+                                                                                              },
+                                                                                   "nombres":  {
+                                                                                                   "type":  "string",
+                                                                                                   "title":  "Nombres"
+                                                                                               },
+                                                                                   "apellidos":  {
+                                                                                                     "type":  "string",
+                                                                                                     "title":  "Apellidos"
+                                                                                                 },
+                                                                                   "telefono":  {
+                                                                                                    "type":  "string",
+                                                                                                    "title":  "Telefono"
+                                                                                                },
+                                                                                   "id":  {
+                                                                                              "type":  "integer",
+                                                                                              "title":  "Id"
+                                                                                          }
+                                                                               },
+                                                                "type":  "object",
+                                                                "required":  [
+                                                                                 "cedula",
+                                                                                 "nombres",
+                                                                                 "apellidos",
+                                                                                 "telefono",
+                                                                                 "id"
+                                                                             ],
+                                                                "title":  "PacienteResponse"
+                                                            },
+                                       "TransaccionCajaCreate":  {
+                                                                     "properties":  {
+                                                                                        "tipo":  {
+                                                                                                     "type":  "string",
+                                                                                                     "title":  "Tipo"
+                                                                                                 },
+                                                                                        "concepto":  {
+                                                                                                         "type":  "string",
+                                                                                                         "title":  "Concepto"
+                                                                                                     },
+                                                                                        "monto":  {
+                                                                                                      "type":  "number",
+                                                                                                      "title":  "Monto"
+                                                                                                  },
+                                                                                        "fecha":  {
+                                                                                                      "type":  "string",
+                                                                                                      "format":  "date",
+                                                                                                      "title":  "Fecha"
+                                                                                                  },
+                                                                                        "comprobante_id":  {
+                                                                                                               "anyOf":  [
+                                                                                                                             {
+                                                                                                                                 "type":  "integer"
+                                                                                                                             },
+                                                                                                                             {
+                                                                                                                                 "type":  "null"
+                                                                                                                             }
+                                                                                                                         ],
+                                                                                                               "title":  "Comprobante Id"
+                                                                                                           }
+                                                                                    },
+                                                                     "type":  "object",
+                                                                     "required":  [
+                                                                                      "tipo",
+                                                                                      "concepto",
+                                                                                      "monto",
+                                                                                      "fecha"
+                                                                                  ],
+                                                                     "title":  "TransaccionCajaCreate"
+                                                                 },
+                                       "TransaccionCajaResponse":  {
+                                                                       "properties":  {
+                                                                                          "tipo":  {
+                                                                                                       "type":  "string",
+                                                                                                       "title":  "Tipo"
+                                                                                                   },
+                                                                                          "concepto":  {
+                                                                                                           "type":  "string",
+                                                                                                           "title":  "Concepto"
+                                                                                                       },
+                                                                                          "monto":  {
+                                                                                                        "type":  "number",
+                                                                                                        "title":  "Monto"
+                                                                                                    },
+                                                                                          "fecha":  {
+                                                                                                        "type":  "string",
+                                                                                                        "format":  "date",
+                                                                                                        "title":  "Fecha"
+                                                                                                    },
+                                                                                          "comprobante_id":  {
+                                                                                                                 "anyOf":  [
+                                                                                                                               {
+                                                                                                                                   "type":  "integer"
+                                                                                                                               },
+                                                                                                                               {
+                                                                                                                                   "type":  "null"
+                                                                                                                               }
+                                                                                                                           ],
+                                                                                                                 "title":  "Comprobante Id"
+                                                                                                             },
+                                                                                          "id":  {
+                                                                                                     "type":  "integer",
+                                                                                                     "title":  "Id"
+                                                                                                 },
+                                                                                          "fecha_creacion":  {
+                                                                                                                 "type":  "string",
+                                                                                                                 "format":  "date-time",
+                                                                                                                 "title":  "Fecha Creacion"
+                                                                                                             }
+                                                                                      },
+                                                                       "type":  "object",
+                                                                       "required":  [
+                                                                                        "tipo",
+                                                                                        "concepto",
+                                                                                        "monto",
+                                                                                        "fecha",
+                                                                                        "id",
+                                                                                        "fecha_creacion"
+                                                                                    ],
+                                                                       "title":  "TransaccionCajaResponse"
+                                                                   },
+                                       "ValidationError":  {
+                                                               "properties":  {
+                                                                                  "loc":  {
+                                                                                              "items":  {
+                                                                                                            "anyOf":  [
+                                                                                                                          {
+                                                                                                                              "type":  "string"
+                                                                                                                          },
+                                                                                                                          {
+                                                                                                                              "type":  "integer"
+                                                                                                                          }
+                                                                                                                      ]
+                                                                                                        },
+                                                                                              "type":  "array",
+                                                                                              "title":  "Location"
+                                                                                          },
+                                                                                  "msg":  {
+                                                                                              "type":  "string",
+                                                                                              "title":  "Message"
+                                                                                          },
+                                                                                  "type":  {
+                                                                                               "type":  "string",
+                                                                                               "title":  "Error Type"
+                                                                                           },
+                                                                                  "input":  {
+                                                                                                "title":  "Input"
+                                                                                            },
+                                                                                  "ctx":  {
+                                                                                              "type":  "object",
+                                                                                              "title":  "Context"
+                                                                                          }
+                                                                              },
+                                                               "type":  "object",
+                                                               "required":  [
+                                                                                "loc",
+                                                                                "msg",
+                                                                                "type"
+                                                                            ],
+                                                               "title":  "ValidationError"
+                                                           }
+                                   }
+                   }
+}
