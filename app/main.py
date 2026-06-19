@@ -2,7 +2,7 @@ from fastapi import FastAPI
 
 from app.database import Base, engine
 from app import models  # noqa: F401 - registra los modelos en Base.metadata
-from app.routers import administrativo, cita, consulta_medica, medico, orden_medica, paciente, prescripcion_medica
+from app.routers import administrativo, certificado_medico, cita, consulta_medica, medico, orden_medica, paciente, prescripcion_medica
 
 Base.metadata.create_all(bind=engine)
 
@@ -44,4 +44,8 @@ app.include_router(
 
 app.include_router(
     orden_medica.router
+)
+
+app.include_router(
+    certificado_medico.router
 )

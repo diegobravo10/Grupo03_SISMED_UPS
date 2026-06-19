@@ -6,9 +6,10 @@ from app.models.comprobante_venta import ComprobanteVenta
 from app.models.transaccion_caja import TransaccionCaja
 from app.models.prescripcion_medica import PrescripcionMedica
 from app.models.orden_medica import OrdenMedica
+from app.models.certificado_medico import CertificadoMedico
 
 __all__ = [
     "Paciente", "Medico", "Cita", "ConsultaMedica",
     "ComprobanteVenta", "TransaccionCaja", "PrescripcionMedica",
-    "OrdenMedica",
+    "OrdenMedica", "CertificadoMedico",
 ]
