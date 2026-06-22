@@ -1,6 +1,6 @@
 # SISMED UPS - Sistema de Gestión Médica
 
-Backend académico del sistema de gestión médica SISMED UPS, desarrollado con **FastAPI** y **SQLite (SQLAlchemy)**.  
+Backend del sistema de gestión médica SISMED UPS, desarrollado con **FastAPI** y **SQLite (SQLAlchemy)**.  
 Incluye funcionalidades administrativas de caja y comprobantes de venta.
 
 ## Estructura del proyecto
@@ -49,6 +49,7 @@ app/
 | Diego Bravo | Desarrollador |
 | Rafael Serrano | Desarrollador |
 | Ariel Paltan | Desarrollador |
+| Sebastian Machado | Desarrollador |
 
 ## Requisitos
 
@@ -99,13 +100,10 @@ La API quedará disponible en `http://127.0.0.1:8000`.
 
 ### Evidencias
 
-![Swagger UI](swagger_screenshot.png)
+<img width="1109" height="650" alt="Image" src="https://github.com/user-attachments/assets/aed0d92d-4b4b-46cb-9626-9049f07d4d83" />
 
 Esquema OpenAPI guardado en [`swagger_evidencia.json`](swagger_evidencia.json).
 
-## Enlace del repositorio
-
-[https://github.com/diegobravo10/Grupo03_SISMED_UPS.git](https://github.com/diegobravo10/Grupo03_SISMED_UPS.git)
 
 ## Conclusiones
 
