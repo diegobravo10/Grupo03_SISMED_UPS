@@ -3,8 +3,8 @@ from sqlalchemy.orm import Session
 from app.models.cita import Cita
 from app.repositories import cita as cita_repo
 from app.repositories import consulta_medica as consulta_repo
-from app.repositories import medico as medico_repo
-from app.repositories import paciente as paciente_repo
+from app.repositories.medico import MedicoRepository as medico_repo
+from app.repositories.paciente import PacienteRepository as paciente_repo
 from app.schemas.cita import CitaCreate
 from app.services.exceptions import EntidadNoEncontradaError, ReglaNegocioError
 
