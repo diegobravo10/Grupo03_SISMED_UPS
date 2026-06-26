@@ -1,3 +1,4 @@
+from app.models.consulta_medica import ConsultaMedica
 from app.models.medico import Medico
 
 
@@ -16,6 +17,10 @@ def crear_cita(client, test_paciente, test_medico):
     response = client.post("/citas/", json=cita_payload(test_paciente, test_medico))
     assert response.status_code == 201
     return response.json()
+
+
+def cambiar_estado(client, cita_id, estado):
+    return client.put(f"/citas/{cita_id}/estado", json={"estado": estado})
 
 
 def test_crear_cita_correctamente(client, test_paciente, test_medico):
@@ -169,3 +174,78 @@ def test_permite_cita_del_mismo_medico_en_horario_diferente(
     assert data["medico_id"] == test_medico.id
     assert data["hora_inicio"] == "10:00:00"
     assert data["hora_fin"] == "10:30:00"
+
+
+def test_cambiar_estado_de_separada_a_confirmada(client, test_paciente, test_medico):
+    cita = crear_cita(client, test_paciente, test_medico)
+
+    response = cambiar_estado(client, cita["id"], "CONFIRMADA")
+
+    assert response.status_code == 200
+    assert response.json()["estado"] == "CONFIRMADA"
+
+
+def test_cambiar_estado_de_confirmada_a_en_sala_espera(
+    client, test_paciente, test_medico
+):
+    cita = crear_cita(client, test_paciente, test_medico)
+    cambiar_estado(client, cita["id"], "CONFIRMADA")
+
+    response = cambiar_estado(client, cita["id"], "EN_SALA_ESPERA")
+
+    assert response.status_code == 200
+    assert response.json()["estado"] == "EN_SALA_ESPERA"
+
+
+def test_no_permite_cambiar_a_estado_invalido(client, test_paciente, test_medico):
+    cita = crear_cita(client, test_paciente, test_medico)
+
+    response = cambiar_estado(client, cita["id"], "ESTADO_INVALIDO")
+
+    assert response.status_code == 400
+    assert response.json()["detail"] == "Estado 'ESTADO_INVALIDO' no es válido"
+
+
+def test_no_permite_cambiar_estado_de_cita_inexistente(client):
+    response = cambiar_estado(client, 9999, "CONFIRMADA")
+
+    assert response.status_code == 404
+    assert response.json()["detail"] == "Cita no encontrada"
+
+
+def test_no_permite_pasar_a_atendida_sin_consulta_asociada(
+    client, test_paciente, test_medico
+):
+    cita = crear_cita(client, test_paciente, test_medico)
+    cambiar_estado(client, cita["id"], "CONFIRMADA")
+    cambiar_estado(client, cita["id"], "EN_SALA_ESPERA")
+
+    response = cambiar_estado(client, cita["id"], "ATENDIDA")
+
+    assert response.status_code == 400
+    assert (
+        response.json()["detail"]
+        == "No se puede marcar la cita como ATENDIDA sin una consulta médica asociada"
+    )
+
+
+def test_permite_pasar_a_atendida_con_consulta_asociada(
+    client, db_session, test_paciente, test_medico
+):
+    cita = crear_cita(client, test_paciente, test_medico)
+    cambiar_estado(client, cita["id"], "CONFIRMADA")
+    cambiar_estado(client, cita["id"], "EN_SALA_ESPERA")
+    consulta = ConsultaMedica(
+        cita_id=cita["id"],
+        paciente_id=test_paciente.id,
+        medico_id=test_medico.id,
+        motivo="Consulta general",
+        diagnostico="Paciente estable",
+    )
+    db_session.add(consulta)
+    db_session.commit()
+
+    response = cambiar_estado(client, cita["id"], "ATENDIDA")
+
+    assert response.status_code == 200
+    assert response.json()["estado"] == "ATENDIDA"
