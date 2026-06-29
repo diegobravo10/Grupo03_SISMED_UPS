@@ -4,6 +4,7 @@ from app.models.cita import Cita
 from app.models.consulta_medica import ConsultaMedica
 from app.models.prescripcion_medica import PrescripcionMedica
 from app.models.orden_medica import OrdenMedica
+from app.models.certificado_medico import CertificadoMedico
 
 
 @pytest.fixture
@@ -161,3 +162,49 @@ def test_verificar_relacion_consulta_ordenes(db_session, test_cita, test_pacient
     tipos_generados = [o.tipo for o in consulta.ordenes]
     assert "Imagenología" in tipos_generados
     assert "Laboratorio" in tipos_generados
+
+# COMMIT 4: PRUEBAS DE CERTIFICADOS MÉDICOS
+
+def test_crear_certificado_medico_modelo(db_session, test_cita, test_paciente, test_medico):
+    consulta = ConsultaMedica(
+        cita_id=test_cita.id,
+        paciente_id=test_paciente.id,
+        medico_id=test_medico.id,
+        diagnostico="Lumbalgia aguda post-esfuerzo"
+    )
+    db_session.add(consulta)
+    db_session.commit()
+    db_session.refresh(consulta)
+
+    certificado = CertificadoMedico(
+        consulta_id=consulta.id,
+        tipo="Reposo Médico",
+        contenido="Se concede reposo médico absoluto por el lapso de 72 horas a partir de la fecha."
+    )
+    db_session.add(certificado)
+    db_session.commit()
+    db_session.refresh(certificado)
+
+    assert certificado.id is not None
+    assert certificado.tipo == "Reposo Médico"
+    assert "72 horas" in certificado.contenido
+
+def test_verificar_relacion_consulta_certificados(db_session, test_cita, test_paciente, test_medico):
+    consulta = ConsultaMedica(
+        cita_id=test_cita.id,
+        paciente_id=test_paciente.id,
+        medico_id=test_medico.id,
+        diagnostico="Control de salud ocupacional"
+    )
+    db_session.add(consulta)
+    db_session.commit()
+    db_session.refresh(consulta)
+
+    c1 = CertificadoMedico(consulta_id=consulta.id, tipo="Asistencia", contenido="Paciente asistió a consulta médica.")
+    c2 = CertificadoMedico(consulta_id=consulta.id, tipo="Aptitud", contenido="Apto para realizar actividades físicas.")
+    
+    db_session.add_all([c1, c2])
+    db_session.commit()
+
+    db_session.refresh(consulta)
+    assert len(consulta.certificados) == 2
