@@ -6,6 +6,9 @@ from app.models.prescripcion_medica import PrescripcionMedica
 from app.models.orden_medica import OrdenMedica
 from app.models.certificado_medico import CertificadoMedico
 
+from app.schemas.consulta_medica import ConsultaMedicaCreate
+from app.services import consulta_medica as consulta_service
+from app.services.exceptions import EntidadNoEncontradaError, ReglaNegocioError
 
 @pytest.fixture
 def test_cita(db_session, test_paciente, test_medico):
@@ -58,7 +61,6 @@ def test_verificar_relaciones_consulta(db_session, test_cita, test_paciente, tes
     assert consulta.medico.nombres == test_medico.nombres
 
 # COMMIT 2: PRUEBAS DE PRESCRIPCIÓN MÉDICA
-
 def test_crear_prescripcion_medica_modelo(db_session, test_cita, test_paciente, test_medico):
     # Creamos una consulta médica real en la base de datos
     consulta = ConsultaMedica(
@@ -110,7 +112,6 @@ def test_verificar_relacion_consulta_prescripcion(db_session, test_cita, test_pa
     assert consulta.prescripciones[0].medicamento in ["Ibuprofeno 400mg", "Paracetamol 500mg"]
 
 # COMMIT 3: PRUEBAS DE ÓRDENES MÉDICAS
-
 def test_crear_orden_medica_modelo(db_session, test_cita, test_paciente, test_medico):
     # Creamos la consulta médica base
     consulta = ConsultaMedica(
@@ -155,7 +156,6 @@ def test_verificar_relacion_consulta_ordenes(db_session, test_cita, test_pacient
     
     db_session.add_all([o1, o2])
     db_session.commit()
-
     db_session.refresh(consulta)
     
     assert len(consulta.ordenes) == 2
@@ -164,7 +164,6 @@ def test_verificar_relacion_consulta_ordenes(db_session, test_cita, test_pacient
     assert "Laboratorio" in tipos_generados
 
 # COMMIT 4: PRUEBAS DE CERTIFICADOS MÉDICOS
-
 def test_crear_certificado_medico_modelo(db_session, test_cita, test_paciente, test_medico):
     consulta = ConsultaMedica(
         cita_id=test_cita.id,
@@ -205,6 +204,57 @@ def test_verificar_relacion_consulta_certificados(db_session, test_cita, test_pa
     
     db_session.add_all([c1, c2])
     db_session.commit()
-
     db_session.refresh(consulta)
     assert len(consulta.certificados) == 2
+
+# COMMIT 5: PRUEBAS DE SERVICIOS Y REGLAS DE NEGOCIO
+def test_registrar_consulta_servicio_exito(db_session, test_cita):
+    # Probamos el registro exitoso pasando por las validaciones de negocio
+    datos = ConsultaMedicaCreate(
+        cita_id=test_cita.id,
+        motivo="Control post-operatorio",
+        anamnesis="Evolución favorable sin complicaciones",
+        diagnostico="Alta médica pronta",
+        observaciones="Mantener dieta blanda",
+        tratamiento="Ninguno"
+    )
+    resultado = consulta_service.registrar_consulta(db_session, datos)
+    assert resultado.id is not None
+    assert resultado.diagnostico == "Alta médica pronta"
+
+def test_registrar_consulta_cita_inexistente(db_session):
+    # Forzamos error buscando una cita ID 9999 que no existe
+    datos = ConsultaMedicaCreate(cita_id=9999, diagnostico="Error esperado")
+    with pytest.raises(EntidadNoEncontradaError) as exc_info:
+        consulta_service.registrar_consulta(db_session, datos)
+    assert "Cita no encontrada" in str(exc_info.value)
+
+def test_registrar_consulta_duplicada(db_session, test_cita):
+    datos = ConsultaMedicaCreate(cita_id=test_cita.id, diagnostico="Primera consulta")
+    consulta_service.registrar_consulta(db_session, datos)
+    # Intentamos registrar una segunda consulta para la misma cita
+    datos_duplicados = ConsultaMedicaCreate(cita_id=test_cita.id, diagnostico="Segunda consulta ilegal")
+    with pytest.raises(ReglaNegocioError) as exc_info:
+        consulta_service.registrar_consulta(db_session, datos_duplicados)
+    assert "Ya existe una consulta registrada para esta cita" in str(exc_info.value)
+
+def test_buscar_consulta_por_id_servicio(db_session, test_cita):
+    datos = ConsultaMedicaCreate(cita_id=test_cita.id, diagnostico="Búsqueda exacta")
+    creada = consulta_service.registrar_consulta(db_session, datos)
+    encontrada = consulta_service.buscar_por_id(db_session, creada.id)
+    assert encontrada.id == creada.id
+    # Verificamos excepción si no existe
+    with pytest.raises(EntidadNoEncontradaError):
+        consulta_service.buscar_por_id(db_session, 8888)
+
+def test_buscar_por_cita_servicio(db_session, test_cita):
+    datos = ConsultaMedicaCreate(cita_id=test_cita.id, diagnostico="Búsqueda por cita")
+    consulta_service.registrar_consulta(db_session, datos)
+    encontrada = consulta_service.buscar_por_cita(db_session, test_cita.id)
+    assert encontrada.cita_id == test_cita.id
+    # Cita existe pero no tiene consulta
+    cita_vacia = Cita(paciente_id=test_cita.paciente_id, medico_id=test_cita.medico_id, fecha=datetime.date(2026, 6, 30), hora_inicio=datetime.time(11,0), hora_fin=datetime.time(11,30), estado="SEPARADA")
+    db_session.add(cita_vacia)
+    db_session.commit()
+    with pytest.raises(EntidadNoEncontradaError):
+        consulta_service.buscar_por_cita(db_session, cita_vacia.id)
