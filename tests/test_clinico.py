@@ -3,6 +3,7 @@ import pytest
 from app.models.cita import Cita
 from app.models.consulta_medica import ConsultaMedica
 from app.models.prescripcion_medica import PrescripcionMedica
+from app.models.orden_medica import OrdenMedica
 
 
 @pytest.fixture
@@ -55,7 +56,6 @@ def test_verificar_relaciones_consulta(db_session, test_cita, test_paciente, tes
     assert consulta.paciente.cedula == test_paciente.cedula
     assert consulta.medico.nombres == test_medico.nombres
 
-
 # COMMIT 2: PRUEBAS DE PRESCRIPCIÓN MÉDICA
 
 def test_crear_prescripcion_medica_modelo(db_session, test_cita, test_paciente, test_medico):
@@ -107,3 +107,57 @@ def test_verificar_relacion_consulta_prescripcion(db_session, test_cita, test_pa
     db_session.refresh(consulta)
     assert len(consulta.prescripciones) == 2
     assert consulta.prescripciones[0].medicamento in ["Ibuprofeno 400mg", "Paracetamol 500mg"]
+
+# COMMIT 3: PRUEBAS DE ÓRDENES MÉDICAS
+
+def test_crear_orden_medica_modelo(db_session, test_cita, test_paciente, test_medico):
+    # Creamos la consulta médica base
+    consulta = ConsultaMedica(
+        cita_id=test_cita.id,
+        paciente_id=test_paciente.id,
+        medico_id=test_medico.id,
+        diagnostico="Sospecha de apendicitis aguda"
+    )
+    db_session.add(consulta)
+    db_session.commit()
+    db_session.refresh(consulta)
+
+    # Creamos la orden 
+    orden = OrdenMedica(
+        consulta_id=consulta.id,
+        tipo="Laboratorio",
+        descripcion="Biometría hemática completa",
+        indicaciones="Presentarse en ayuno estricto de 8 horas"
+    )
+    db_session.add(orden)
+    db_session.commit()
+    db_session.refresh(orden)
+
+    assert orden.id is not None
+    assert orden.tipo == "Laboratorio"
+    assert orden.consulta_id == consulta.id
+
+def test_verificar_relacion_consulta_ordenes(db_session, test_cita, test_paciente, test_medico):
+    consulta = ConsultaMedica(
+        cita_id=test_cita.id,
+        paciente_id=test_paciente.id,
+        medico_id=test_medico.id,
+        diagnostico="Traumatismo de rodilla derecha"
+    )
+    db_session.add(consulta)
+    db_session.commit()
+    db_session.refresh(consulta)
+
+    # Generamos dos órdenes distintas para la misma consulta
+    o1 = OrdenMedica(consulta_id=consulta.id, tipo="Imagenología", descripcion="Rayos X de rodilla AP y Lateral")
+    o2 = OrdenMedica(consulta_id=consulta.id, tipo="Laboratorio", descripcion="Ácido úrico en sangre")
+    
+    db_session.add_all([o1, o2])
+    db_session.commit()
+
+    db_session.refresh(consulta)
+    
+    assert len(consulta.ordenes) == 2
+    tipos_generados = [o.tipo for o in consulta.ordenes]
+    assert "Imagenología" in tipos_generados
+    assert "Laboratorio" in tipos_generados
