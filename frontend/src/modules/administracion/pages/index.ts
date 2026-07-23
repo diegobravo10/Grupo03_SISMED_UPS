@@ -1,1 +1,2 @@
-export { AdministracionPage } from './AdministracionPage'
+export { CajaPage } from './CajaPage'
+export { ComprobantesPage } from './ComprobantesPage'

@@ -2,9 +2,12 @@ import { PageHeader } from '@/components'
 
 export function CitasPage() {
   return (
-    <PageHeader
-      title="Citas"
-      description="Espacio reservado para la gestión de citas."
-    />
+    <div className="page">
+      <PageHeader
+        eyebrow="Agenda médica"
+        title="Citas"
+        description="Página base para la programación y consulta de citas."
+      />
+    </div>
   )
 }

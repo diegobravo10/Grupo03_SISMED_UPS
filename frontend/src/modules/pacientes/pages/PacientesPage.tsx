@@ -2,9 +2,12 @@ import { PageHeader } from '@/components'
 
 export function PacientesPage() {
   return (
-    <PageHeader
-      title="Pacientes"
-      description="Espacio reservado para la gestión de pacientes."
-    />
+    <div className="page">
+      <PageHeader
+        eyebrow="Atención médica"
+        title="Pacientes"
+        description="Página base para la gestión de pacientes."
+      />
+    </div>
   )
 }

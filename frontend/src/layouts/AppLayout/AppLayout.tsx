@@ -9,7 +9,7 @@ interface NavigationItem {
 }
 
 const mainNavigation: NavigationItem[] = [
-  { to: '/', label: 'Dashboard', icon: 'dashboard' },
+  { to: '/dashboard', label: 'Dashboard', icon: 'dashboard' },
   { to: '/pacientes', label: 'Pacientes', icon: 'patient' },
   { to: '/medicos', label: 'Médicos', icon: 'doctor' },
   { to: '/citas', label: 'Citas', icon: 'calendar' },
@@ -28,7 +28,7 @@ export function AppLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const { pathname } = useLocation()
   const activeItem = [...mainNavigation, ...administrationNavigation].find(
-    ({ to }) => (to === '/' ? pathname === '/' : pathname.startsWith(to)),
+    ({ to }) => pathname.startsWith(to),
   )
 
   const closeSidebar = () => setIsSidebarOpen(false)
@@ -53,7 +53,7 @@ export function AppLayout() {
             <NavLink
               key={to}
               to={to}
-              end={to === '/'}
+              end
               onClick={closeSidebar}
               className={({ isActive }) =>
                 `nav-link${isActive ? ' nav-link--active' : ''}`
@@ -79,19 +79,20 @@ export function AppLayout() {
             <span>Administración</span>
           </NavLink>
           <div className="nav-children">
-          {administrationNavigation.map(({ to, label, icon }) => (
-            <NavLink
-              key={to}
-              to={to}
-              onClick={closeSidebar}
-              className={({ isActive }) =>
-                `nav-link nav-link--nested${isActive ? ' nav-link--active' : ''}`
-              }
-            >
-              <Icon name={icon} />
-              <span>{label}</span>
-            </NavLink>
-          ))}
+            {administrationNavigation.map(({ to, label, icon }) => (
+              <NavLink
+                key={to}
+                to={to}
+                end
+                onClick={closeSidebar}
+                className={({ isActive }) =>
+                  `nav-link nav-link--nested${isActive ? ' nav-link--active' : ''}`
+                }
+              >
+                <Icon name={icon} />
+                <span>{label}</span>
+              </NavLink>
+            ))}
           </div>
         </nav>
 

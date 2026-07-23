@@ -2,9 +2,12 @@ import { PageHeader } from '@/components'
 
 export function MedicosPage() {
   return (
-    <PageHeader
-      title="Médicos"
-      description="Espacio reservado para la gestión de médicos."
-    />
+    <div className="page">
+      <PageHeader
+        eyebrow="Equipo médico"
+        title="Médicos"
+        description="Página base para la gestión de profesionales médicos."
+      />
+    </div>
   )
 }

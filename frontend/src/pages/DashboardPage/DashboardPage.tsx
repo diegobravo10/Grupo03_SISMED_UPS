@@ -6,7 +6,7 @@ const agenda = [
   { time: '10:00', patient: 'Lucía Herrera', doctor: 'Dra. Ana Torres', status: 'Confirmada' },
 ]
 
-export function HomePage() {
+export function DashboardPage() {
   return (
     <div className="page">
       <PageHeader

@@ -1,6 +1,6 @@
-import { createBrowserRouter } from 'react-router-dom'
+import { Navigate, createBrowserRouter } from 'react-router-dom'
 import { AppLayout } from '@/layouts'
-import { HomePage, NotFoundPage } from '@/pages'
+import { DashboardPage, NotFoundPage } from '@/pages'
 import {
   administracionRoutes,
   citasRoutes,
@@ -14,7 +14,8 @@ export const appRouter = createBrowserRouter([
     element: <AppLayout />,
     errorElement: <NotFoundPage />,
     children: [
-      { index: true, element: <HomePage /> },
+      { index: true, element: <Navigate to="/dashboard" replace /> },
+      { path: 'dashboard', element: <DashboardPage /> },
       ...pacientesRoutes,
       ...medicosRoutes,
       ...citasRoutes,
