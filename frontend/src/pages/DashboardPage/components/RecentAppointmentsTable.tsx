@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom'
-import { SectionHeader, StatusBadge } from '@/components'
+import { ContentState, SectionHeader, StatusBadge } from '@/components'
 import type { AppointmentStatus, RecentAppointment } from '../types'
 
 interface RecentAppointmentsTableProps {
   appointments: RecentAppointment[]
+  isLoading?: boolean
+  error?: string
 }
 
 function getStatusTone(status: AppointmentStatus) {
@@ -14,20 +16,31 @@ function getStatusTone(status: AppointmentStatus) {
 
 export function RecentAppointmentsTable({
   appointments,
+  isLoading = false,
+  error,
 }: RecentAppointmentsTableProps) {
-  return (
-    <section className="content-section dashboard-appointments">
-      <SectionHeader
-        title="Citas recientes"
-        description="Últimos registros de la agenda médica"
-        action={
-          <Link className="text-button" to="/citas">
-            Ver todas las citas
-          </Link>
-        }
-      />
+  let content
 
-      <div className="data-table-wrapper">
+  if (isLoading) {
+    content = <ContentState variant="loading" message="Consultando las citas recientes." />
+  } else if (error) {
+    content = <ContentState variant="error" message={error} />
+  } else if (appointments.length === 0) {
+    content = (
+      <ContentState
+        variant="empty"
+        title="Sin citas recientes"
+        message="Las citas registradas aparecerán en esta sección."
+      />
+    )
+  } else {
+    content = (
+      <div
+        className="data-table-wrapper"
+        role="region"
+        aria-label="Citas recientes"
+        tabIndex={0}
+      >
         <table className="data-table">
           <thead>
             <tr>
@@ -47,10 +60,14 @@ export function RecentAppointmentsTable({
                   <span className="appointment-time">{appointment.time}</span>
                 </td>
                 <td>
-                  <strong className="table-primary">{appointment.patient}</strong>
+                  <strong className="table-primary">
+                    {appointment.patient}
+                  </strong>
                 </td>
                 <td>
-                  <strong className="table-primary">{appointment.doctor}</strong>
+                  <strong className="table-primary">
+                    {appointment.doctor}
+                  </strong>
                   <span className="table-secondary">
                     {appointment.specialty}
                   </span>
@@ -65,6 +82,22 @@ export function RecentAppointmentsTable({
           </tbody>
         </table>
       </div>
+    )
+  }
+
+  return (
+    <section className="content-section dashboard-appointments">
+      <SectionHeader
+        title="Citas recientes"
+        description="Últimos registros de la agenda médica"
+        action={
+          <Link className="text-button" to="/citas">
+            Ver todas las citas
+          </Link>
+        }
+      />
+
+      {content}
     </section>
   )
 }

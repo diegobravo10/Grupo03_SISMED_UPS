@@ -12,7 +12,6 @@ export const appRouter = createBrowserRouter([
   {
     path: '/',
     element: <AppLayout />,
-    errorElement: <NotFoundPage />,
     children: [
       { index: true, element: <Navigate to="/dashboard" replace /> },
       { path: 'dashboard', element: <DashboardPage /> },
@@ -20,6 +19,7 @@ export const appRouter = createBrowserRouter([
       ...medicosRoutes,
       ...citasRoutes,
       ...administracionRoutes,
+      { path: '*', element: <NotFoundPage /> },
     ],
   },
 ])

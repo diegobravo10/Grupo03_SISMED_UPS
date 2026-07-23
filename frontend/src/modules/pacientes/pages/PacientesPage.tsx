@@ -1,13 +1,11 @@
-import { PageHeader } from '@/components'
+import { ModulePlaceholder } from '@/components'
 
 export function PacientesPage() {
   return (
-    <div className="page">
-      <PageHeader
-        eyebrow="Atención médica"
-        title="Pacientes"
-        description="Página base para la gestión de pacientes."
-      />
-    </div>
+    <ModulePlaceholder
+      eyebrow="Atención médica"
+      title="Pacientes"
+      description="Página base para la gestión de pacientes."
+    />
   )
 }

@@ -1,13 +1,11 @@
-import { PageHeader } from '@/components'
+import { ModulePlaceholder } from '@/components'
 
 export function CajaPage() {
   return (
-    <div className="page">
-      <PageHeader
-        eyebrow="Administración"
-        title="Caja"
-        description="Página base para el control de movimientos de caja."
-      />
-    </div>
+    <ModulePlaceholder
+      eyebrow="Administración"
+      title="Caja"
+      description="Página base para el control de movimientos de caja."
+    />
   )
 }

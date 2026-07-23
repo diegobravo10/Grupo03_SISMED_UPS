@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { Icon, type IconName } from '@/components'
 
@@ -33,9 +33,20 @@ export function AppLayout() {
 
   const closeSidebar = () => setIsSidebarOpen(false)
 
+  useEffect(() => {
+    if (!isSidebarOpen) return
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setIsSidebarOpen(false)
+    }
+
+    document.addEventListener('keydown', closeOnEscape)
+    return () => document.removeEventListener('keydown', closeOnEscape)
+  }, [isSidebarOpen])
+
   return (
     <div className={`app-shell${isSidebarOpen ? ' app-shell--menu-open' : ''}`}>
-      <aside className="sidebar" aria-label="Barra lateral">
+      <aside className="sidebar" id="main-sidebar" aria-label="Barra lateral">
         <div className="brand">
           <span className="brand__mark" aria-hidden="true">
             <span />
@@ -118,6 +129,8 @@ export function AppLayout() {
             <button
               className="icon-button topbar__menu"
               aria-label="Abrir menú"
+              aria-controls="main-sidebar"
+              aria-expanded={isSidebarOpen}
               onClick={() => setIsSidebarOpen(true)}
               type="button"
             >
@@ -130,17 +143,6 @@ export function AppLayout() {
           </div>
 
           <div className="topbar__actions">
-            <label className="search-control">
-              <Icon name="search" size={18} />
-              <span className="sr-only">Buscar en SISMED</span>
-              <input
-                type="search"
-                placeholder="Buscar paciente, cita..."
-                aria-label="Buscar en SISMED"
-              />
-              <kbd>Ctrl K</kbd>
-            </label>
-
             <div className="user-summary">
               <span className="user-summary__avatar">AU</span>
               <span className="user-summary__details">
