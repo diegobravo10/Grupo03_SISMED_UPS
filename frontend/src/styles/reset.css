@@ -3,17 +3,45 @@
 }
 
 html {
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  color: #172033;
-  background: #f4f7fb;
+  font-family: "IBM Plex Sans", "Segoe UI", Arial, sans-serif;
+  color: var(--ink-950);
+  background: var(--canvas);
+  font-synthesis: none;
 }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  text-rendering: optimizeLegibility;
 }
 
 a {
   color: inherit;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--teal-700);
+  outline-offset: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

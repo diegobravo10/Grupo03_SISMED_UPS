@@ -1,1 +1,5 @@
+export { Icon } from './Icon'
+export type { IconName } from './Icon'
 export { PageHeader } from './PageHeader'
+export { SectionHeader } from './SectionHeader'
+export { StatusBadge } from './StatusBadge'

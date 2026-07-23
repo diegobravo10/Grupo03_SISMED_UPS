@@ -1,10 +1,17 @@
 import { PageHeader } from '@/components'
 
-export function AdministracionPage() {
+interface AdministracionPageProps {
+  section?: 'Administración' | 'Caja' | 'Comprobantes'
+}
+
+export function AdministracionPage({
+  section = 'Administración',
+}: AdministracionPageProps) {
   return (
     <PageHeader
-      title="Administración"
-      description="Espacio reservado para la gestión administrativa."
+      eyebrow="Administración"
+      title={section}
+      description={`Espacio reservado para la gestión de ${section.toLowerCase()}.`}
     />
   )
 }
