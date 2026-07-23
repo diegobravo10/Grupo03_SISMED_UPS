@@ -1,0 +1,9 @@
+:root {
+  --color-primary: #16697a;
+  --color-primary-soft: #e5f2f4;
+  --color-surface: #ffffff;
+  --color-border: #dce4ec;
+  --color-muted: #64748b;
+  --radius-md: 0.75rem;
+  --space-page: clamp(1.5rem, 4vw, 3.5rem);
+}
