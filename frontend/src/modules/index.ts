@@ -1,4 +1,7 @@
-export { administracionRoutes } from './administracion'
-export { citasRoutes } from './citas'
-export { medicosRoutes } from './medicos'
-export { pacientesRoutes } from './pacientes'
+export {
+  administracionRoutes,
+  administracionService,
+} from './administracion'
+export { citasRoutes, citasService } from './citas'
+export { medicosRoutes, medicosService } from './medicos'
+export { pacientesRoutes, pacientesService } from './pacientes'

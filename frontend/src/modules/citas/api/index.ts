@@ -1,2 +1,3 @@
-// Contratos y servicios HTTP del módulo de citas.
-export {}
+import { createApiService } from '@/api'
+
+export const citasService = createApiService('/citas')

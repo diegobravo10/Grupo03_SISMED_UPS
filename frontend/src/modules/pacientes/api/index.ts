@@ -1,2 +1,3 @@
-// Contratos y servicios HTTP del módulo de pacientes.
-export {}
+import { createApiService } from '@/api'
+
+export const pacientesService = createApiService('/pacientes')

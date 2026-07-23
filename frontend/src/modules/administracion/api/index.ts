@@ -1,2 +1,3 @@
-// Contratos y servicios HTTP del módulo de administración.
-export {}
+import { createApiService } from '@/api'
+
+export const administracionService = createApiService('/admin')
