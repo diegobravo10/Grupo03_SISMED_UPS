@@ -460,6 +460,27 @@
   background: #fafcfc;
 }
 
+.management-table__actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  white-space: nowrap;
+}
+
+.table-action {
+  padding: 0;
+  color: var(--teal-700);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 650;
+}
+
+.table-action:hover {
+  text-decoration: underline;
+}
+
 .data-table__time {
   color: var(--teal-700);
   font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
