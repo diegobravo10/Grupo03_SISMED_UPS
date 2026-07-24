@@ -766,6 +766,14 @@
   margin-top: 16px;
 }
 
+.modal-actions { gap: 10px; }
+.modal-actions .button:first-child { color: var(--ink-700); background: white; border-color: var(--line-strong); }
+.modal-backdrop { position: fixed; z-index: 40; inset: 0; display: grid; place-items: center; padding: 20px; background: rgba(8, 27, 34, .55); }
+.management-modal { width: min(100%, 640px); max-height: calc(100vh - 40px); overflow-y: auto; background: var(--surface); box-shadow: 0 18px 40px rgba(8, 27, 34, .25); }
+.detail-list { padding: 20px; }
+.detail-list p { display: grid; gap: 4px; margin: 0; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: .82rem; }
+.detail-list p span { color: var(--ink-500); font-size: .68rem; font-weight: 700; text-transform: uppercase; }
+
 .admin-feedback {
   margin: 14px 0 0;
   padding: 10px 12px;
