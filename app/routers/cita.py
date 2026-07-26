@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.schemas.cita import CitaCambioEstado, CitaCreate, CitaResponse
+from app.schemas.cita import CitaCambioEstado, CitaCreate, CitaResponse, CitaUpdate
 from app.services import cita as cita_service
 from app.services.exceptions import EntidadNoEncontradaError, ReglaNegocioError
 
@@ -30,6 +30,16 @@ def obtener_cita(cita_id: int, db: Session = Depends(get_db)):
         return cita_service.buscar_cita_por_id(db, cita_id)
     except EntidadNoEncontradaError as e:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
+
+
+@router.put("/{cita_id}", response_model=CitaResponse)
+def editar_cita(cita_id: int, cita: CitaUpdate, db: Session = Depends(get_db)):
+    try:
+        return cita_service.editar_cita(db, cita_id, cita)
+    except EntidadNoEncontradaError as e:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
+    except ReglaNegocioError as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
 
 @router.get("/medico/{medico_id}", response_model=list[CitaResponse])

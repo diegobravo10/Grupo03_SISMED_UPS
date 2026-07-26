@@ -5,7 +5,7 @@ from app.repositories import cita as cita_repo
 from app.repositories import consulta_medica as consulta_repo
 from app.repositories.medico import MedicoRepository as medico_repo
 from app.repositories.paciente import PacienteRepository as paciente_repo
-from app.schemas.cita import CitaCreate
+from app.schemas.cita import CitaCreate, CitaUpdate
 from app.services.exceptions import EntidadNoEncontradaError, ReglaNegocioError
 
 ESTADO_SEPARADA = "SEPARADA"
@@ -51,6 +51,38 @@ def agendar_cita(db: Session, cita: CitaCreate) -> Cita:
         raise ReglaNegocioError("El médico ya tiene una cita registrada en ese horario")
 
     return cita_repo.crear_cita(db, cita)
+
+
+def editar_cita(db: Session, cita_id: int, data: CitaUpdate) -> Cita:
+    cita = cita_repo.obtener_cita_por_id(db, cita_id)
+    if cita is None:
+        raise EntidadNoEncontradaError("Cita no encontrada")
+
+    if cita.estado in (ESTADO_ATENDIDA, ESTADO_CANCELADA):
+        raise ReglaNegocioError(
+            f"No se puede editar una cita con estado '{cita.estado}'"
+        )
+
+    if data.hora_inicio >= data.hora_fin:
+        raise ReglaNegocioError("La hora de inicio debe ser anterior a la hora de fin")
+
+    if paciente_repo.obtener_por_id(db, data.paciente_id) is None:
+        raise EntidadNoEncontradaError("Paciente no encontrado")
+
+    if medico_repo.obtener_por_id(db, data.medico_id) is None:
+        raise EntidadNoEncontradaError("Médico no encontrado")
+
+    cruce = cita_repo.buscar_cruce_horario(
+        db, data.medico_id, data.fecha, data.hora_inicio, data.hora_fin,
+        excluir_cita_id=cita_id,
+    )
+    if cruce is not None:
+        raise ReglaNegocioError("El médico ya tiene una cita registrada en ese horario")
+
+    cita_actualizada = cita_repo.actualizar_cita(db, cita_id, data.model_dump())
+    if cita_actualizada is None:
+        raise EntidadNoEncontradaError("Cita no encontrada")
+    return cita_actualizada
 
 
 def listar_citas(db: Session) -> list[Cita]:

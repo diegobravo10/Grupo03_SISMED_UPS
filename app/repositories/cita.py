@@ -53,6 +53,17 @@ def buscar_cruce_horario(
     return query.first()
 
 
+def actualizar_cita(db: Session, cita_id: int, data: dict) -> Cita | None:
+    cita = obtener_cita_por_id(db, cita_id)
+    if cita is None:
+        return None
+    for key, value in data.items():
+        setattr(cita, key, value)
+    db.commit()
+    db.refresh(cita)
+    return cita
+
+
 def actualizar_estado(db: Session, cita_id: int, nuevo_estado: str) -> Cita | None:
     cita = obtener_cita_por_id(db, cita_id)
     if cita is None:
