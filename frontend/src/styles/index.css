@@ -481,6 +481,22 @@
   text-decoration: underline;
 }
 
+.estado-select {
+  padding: 4px 8px;
+  color: var(--teal-700);
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.7rem;
+  font-weight: 650;
+}
+
+.estado-select:focus-visible {
+  border-color: var(--teal-700);
+  outline: none;
+}
+
 .data-table__time {
   color: var(--teal-700);
   font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
@@ -746,7 +762,8 @@
   font-weight: 600;
 }
 
-.admin-field input {
+.admin-field input,
+.admin-field select {
   min-height: 38px;
   padding: 0 11px;
   color: var(--ink-950);
@@ -756,7 +773,12 @@
   font-size: 0.78rem;
 }
 
-.admin-field input:focus-visible {
+.admin-field select {
+  cursor: pointer;
+}
+
+.admin-field input:focus-visible,
+.admin-field select:focus-visible {
   border-color: var(--teal-700);
 }
 
