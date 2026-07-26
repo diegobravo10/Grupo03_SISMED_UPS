@@ -1,2 +1,2 @@
-// Componentes exclusivos del módulo de citas.
-export {}
+export { CitaForm } from './CitaForm'
+export { CitasTable } from './CitasTable'
